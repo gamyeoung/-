@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>유튜브 채널 키우기</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="gameStartModal" class="modal-overlay">
+        <div class="modal-content">
+            <h1>10만 기념 팬게임</h1>
+            <p>학교에서 배운 걸로 만듬</p>
+            <button id="startGameButton" class="btn">게임 시작하기</button>
+        </div>
+    </div>
+
+    <div id="gameContainer" class="hidden">
+        <div class="main-layout">
+            <section class="left-panel">
+                <div class="card basic-viewer-card game-area">
+                    <h2>기본 시청자</h2>
+                    <div class="viewer-image-placeholder">
+                        <img src="기본 시청자.png" alt="기본 시청자 이미지">
+                    </div>
+                    <p>레벨: <span id="viewerLevelDisplay">1</span></p>
+                    <p>클릭당 수입: <span id="viewerClickAmountDisplay">5원</span></p>
+                    <p>콘텐츠 획득 확률: <span id="contentChanceDisplay">0%</span></p>
+                    <button id="clickViewerButton" class="btn click-btn">클릭</button>
+                    <button id="upgradeViewerButton" class="btn upgrade-btn">
+                        기본 시청자 업그레이드 (<span id="viewerUpgradeCostDisplay">150</span>원)
+                    </button>
+                </div>
+
+                <div class="card video-card game-area">
+                    <h3>영상 제작</h3>
+                    <p>비용: <span id="videoMakeCostDisplay">10,000</span>원</p>
+                    <p>필요 콘텐츠: 2개</p>
+                    <p>예상 수입: <span id="videoExpectedRewardDisplay">3,000 ~ 30,000원</span></p>
+                    <p>구독자 증가: <span id="videoSubIncreaseDisplay">10 ~ 20명</span></p>
+                    <button id="makeVideoButton" class="btn">영상 제작</button>
+                </div>
+            </section>
+
+            <section class="right-panel phone-frame game-area">
+                <div class="phone-screen">
+                    <div class="phone-camera-notch"></div>
+                    <div class="phone-content">
+                        <div class="screen-image-placeholder">
+                            <img src="슈퍼짱짱멋찐카페배너.png" alt="폰 화면 이미지">
+                        </div>
+                        <div class="stats-area">
+                            <p>초당 구독자: <span id="subPerSecondDisplay">1명</span></p>
+                            <p>구독자: <span id="subscribersDisplay">0명</span></p>
+                            <p>자금: <span id="moneyDisplay">0원</span></p>
+                            <p>콘텐츠: <span id="contentDisplay">0개</span></p>
+                            <p>팬아트 등급: <span id="fanartGradesCollected">0/6</span></p>
+                        </div>
+                        <div class="inventory-area">
+                            <h3>아이템창</h3>
+                            <div class="inventory-tabs">
+                                <button class="tab-btn active">아이템</button>
+                                <button class="tab-btn">스킬</button>
+                                <button class="tab-btn">버프</button>
+                                <button class="tab-btn">기타</button>
+                            </div>
+                            <div id="inventoryItems" class="inventory-grid">
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="bottom-nav">
+            <button id="showPassiveViewersButton" class="btn nav-btn">추가 시청자</button>
+            <button id="viewEndingButton" class="btn nav-btn">엔딩 보기</button>
+            <button id="showShopButton" class="btn nav-btn">상점</button>
+        </div>
+
+        <div id="passiveViewersModal" class="modal-overlay hidden">
+            <div class="modal-content passive-viewers-modal-content">
+                <h2>추가 시청자</h2>
+                <div class="passive-viewer-grid">
+                    <div class="card viewer-card" id="fanartViewerCard">
+                        <h3>팬아트 시청자</h3>
+                        <div class="viewer-image-small-placeholder">
+                            <img src="팬아트 시청자.png" alt="팬아트 시청자 이미지">
+                        </div>
+                        <div class="viewer-stats">
+                            <p>레벨: <span id="fanartViewerLevelDisplay">N/A</span></p>
+                            <p>보상: <span id="fanartViewerRewardDisplay">N/A</span></p>
+                            <p>간격: <span id="fanartViewerIntervalDisplay">N/A</span></p>
+                        </div>
+                        <button id="buyFanartViewerButton" class="btn buy-btn">
+                            해금 (구독자: 20명, 자금: 100원)
+                        </button>
+                        <button id="upgradeFanartViewerButton" class="btn upgrade-btn hidden">
+                            업그레이드 (<span id="fanartViewerUpgradeCostDisplay">N/A</span>원)
+                        </button>
+                    </div>
+
+                    <div class="card viewer-card" id="donateViewerCard">
+                        <h3>기부 시청자</h3>
+                        <div class="viewer-image-small-placeholder">
+                            <img src="기부 시청자.png" alt="도네이터 시청자 이미지">
+                        </div>
+                        <div class="viewer-stats">
+                            <p>레벨: <span id="donateViewerLevelDisplay">N/A</span></p>
+                            <p>보상: <span id="donateViewerRewardDisplay">N/A</span></p>
+                            <p>간격: <span id="donateViewerIntervalDisplay">N/A</span></p>
+                        </div>
+                        <button id="buyDonateViewerButton" class="btn buy-btn">
+                            해금 (구독자: 200명, 자금: 1,000원)
+                        </button>
+                        <button id="upgradeDonateViewerButton" class="btn upgrade-btn hidden">
+                            업그레이드 (<span id="donateViewerUpgradeCostDisplay">N/A</span>원)
+                        </button>
+                    </div>
+
+                    <div class="card viewer-card" id="ytViewerCard">
+                        <h3>유튜브 시청자</h3>
+                        <div class="viewer-image-small-placeholder">
+                            <img src="유튭 시청자.png" alt="유튜브 시청자 이미지">
+                        </div>
+                        <div class="viewer-stats">
+                            <p>레벨: <span id="ytViewerLevelDisplay">N/A</span></p>
+                            <p>보상: <span id="ytViewerRewardDisplay">N/A</span></p>
+                            <p>간격: <span id="ytViewerIntervalDisplay">N/A</span></p>
+                        </div>
+                        <button id="buyYtViewerButton" class="btn buy-btn">
+                            해금 (구독자: 500명)
+                        </button>
+                        <button id="upgradeYtViewerButton" class="btn upgrade-btn hidden">
+                            업그레이드 (<span id="ytViewerUpgradeCostDisplay">N/A</span>원)
+                        </button>
+                    </div>
+
+                    <div class="card viewer-card" id="devViewerCard">
+                        <h3>개발자 시청자</h3>
+                        <div class="viewer-image-small-placeholder">
+                            <img src="개발자 시청자.png" alt="개발자 시청자 이미지">
+                        </div>
+                        <div class="viewer-stats">
+                            <p>레벨: <span id="devViewerLevelDisplay">N/A</span></p>
+                            <p>보상: <span id="devViewerRewardDisplay">N/A</span></p>
+                            <p>간격: <span id="devViewerIntervalDisplay">N/A</span></p>
+                        </div>
+                        <button id="buyDevViewerButton" class="btn buy-btn">
+                            해금 (구독자: 1,000명, 자금: 100,000원)
+                        </button>
+                        <button id="upgradeDevViewerButton" class="btn upgrade-btn hidden">
+                            업그레이드 (<span id="devViewerUpgradeCostDisplay">N/A</span>원)
+                        </button>
+                    </div>
+
+                    <div class="card viewer-card" id="vipViewerCard">
+                        <h3>VIP 시청자</h3>
+                        <div class="viewer-image-small-placeholder">
+                            <img src="vip 시청자.png" alt="VIP 시청자 이미지">
+                        </div>
+                        <div class="viewer-stats">
+                            <p>레벨: <span id="vipViewerLevelDisplay">N/A</span></p>
+                            <p>보상: <span id="vipViewerRewardDisplay">N/A</span></p>
+                            <p>간격: 없음</p>
+                        </div>
+                        <button id="buyVipViewerButton" class="btn buy-btn">
+                            해금 (구독자: 20,000명, 자금: 1,000,000원)
+                        </button>
+                        <button id="upgradeVipViewerButton" class="btn upgrade-btn hidden">
+                            업그레이드 (<span id="vipViewerUpgradeCostDisplay">N/A</span>원)
+                        </button>
+                    </div>
+                </div>
+                <button class="btn close-modal-btn">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="gameEndMessage" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h1 class="ending-title">10만이 됬으니 다시 0부터 시작해야겠지?</h1>
+            <p id="endingReason"></p>
+            <button id="restartGameButton" class="btn">다시 시작하기</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

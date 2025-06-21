@@ -1,0 +1,527 @@
+/* 기본 설정 및 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+
+:root {
+    --primary-color: #ff4757; /* 유튜브 레드 느낌 (유지) */
+    --secondary-color: #f0f2f5; /* 밝은 회색 배경 (유지) */
+    --accent-color: #d32f2f; /* 강조 색상 (유지) */
+    --text-color: #333333; /* ★ 텍스트 색상을 진한 회색으로 (유지) */
+    --card-bg: #ffffff; /* 흰색 카드 배경 (유지) */
+    --button-bg: #ff4757; /* 버튼 배경색 (유지) */
+    --button-hover-bg: #e02f3f; /* 버튼 호버 색상 (유지) */
+    --disabled-bg: #cccccc; /* 비활성화 버튼 색상 (유지) */
+    --border-color: #dddddd; /* 테두리 색상 (유지) */
+    --hidden-element: none; /* 숨김 처리 (유지) */
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--secondary-color);
+    color: var(--text-color); /* ★ 적용: 변경된 텍스트 색상 */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.hidden {
+    display: var(--hidden-element) !important;
+}
+
+/* 모달 오버레이 */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 90%;
+    box-sizing: border-box;
+    color: var(--text-color); /* ★ 적용: 변경된 텍스트 색상 */
+}
+
+.modal-content h1 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 2.5em;
+}
+
+.modal-content p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+.ending-title {
+    font-size: 3em !important;
+    animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
+}
+
+/* 버튼 스타일 */
+.btn {
+    background-color: var(--button-bg);
+    color: rgb(0, 0, 0); /* 버튼 텍스트는 흰색 유지 (버튼 배경이 어두우므로) */
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 10px;
+}
+
+.btn:hover:not(:disabled) {
+    background-color: var(--button-hover-bg);
+    transform: translateY(-2px);
+}
+
+.btn:disabled {
+    background-color: var(--disabled-bg);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* 메인 게임 레이아웃 */
+#gameContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 95%;
+    padding: 20px;
+    box-sizing: border;
+}
+
+.main-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 25px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.left-panel, .right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.game-area {
+    background-color: var(--card-bg);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: var(--text-color); /* ★ 적용: 변경된 텍스트 색상 */
+}
+
+h2, h3 {
+    color: var(--accent-color); /* ★ 글자색 강조색으로 변경 (유지) */
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+}
+
+.card {
+    background-color: var(--secondary-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--text-color); /* ★ 적용: 변경된 텍스트 색상 */
+}
+
+.card p {
+    margin: 8px 0;
+    font-size: 1em;
+    color: var(--text-color); /* ★ 명시적 적용: p 태그의 글자색 */
+}
+
+span {
+    color: var(--primary-color); /* ★ span 태그의 글자색 유지 */
+}
+
+/* 이미지 플레이스홀더 및 내부 이미지 스타일 */
+.viewer-image-placeholder,
+.viewer-image-small-placeholder,
+.screen-image-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.05);
+    border: 1px dashed rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.viewer-image-placeholder {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    margin: 0 auto 20px;
+    font-size: 0.9em;
+    color: rgba(0, 0, 0, 0.4); /* 플레이스홀더 텍스트 색상 유지 */
+}
+
+.viewer-image-small-placeholder {
+    width: 80px;
+    height: 80px;
+    border-radius: 5px;
+    margin: 10px auto;
+    font-size: 0.8em;
+    color: rgba(0, 0, 0, 0.4); /* 플레이스홀더 텍스트 색상 유지 */
+}
+
+.screen-image-placeholder {
+    width: 90%;
+    height: 150px;
+    border-radius: 8px;
+    margin: 0 auto 20px;
+    font-size: 1.2em;
+    color: rgba(0, 0, 0, 0.4); /* 플레이스홀더 텍스트 색상 유지 */
+}
+
+.viewer-image-placeholder img,
+.viewer-image-small-placeholder img,
+.screen-image-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: inherit;
+}
+
+
+/* 폰 UI 스타일 */
+.phone-frame {
+    background-color: #333;
+    border-radius: 30px;
+    padding: 15px;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.phone-screen {
+    background-color: #f8f8f8;
+    width: 100%;
+    height: 600px;
+    min-width: 300px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    color: var(--text-color); /* ★ 적용: 변경된 텍스트 색상 */
+}
+
+.phone-camera-notch {
+    width: 120px;
+    height: 25px;
+    background-color: #000;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.phone-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px;
+    padding-top: 40px;
+    box-sizing: border-box;
+}
+
+.stats-area {
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: left;
+    color: var(--text-color); /* ★ 적용: 변경된 텍스트 색상 */
+}
+.stats-area p {
+    margin: 5px 0;
+    font-size: 1.1em;
+    color: var(--text-color); /* ★ 명시적 적용: stats-area 내부 p 태그 */
+}
+
+.inventory-area h3 {
+    font-size: 1.5em;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.inventory-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    gap: 5px;
+}
+
+.tab-btn {
+    background-color: var(--secondary-color);
+    color: var(--text-color); /* ★ 적용: 변경된 텍스트 색상 */
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 0.9em;
+}
+
+.tab-btn.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white; /* 활성 버튼 텍스트는 흰색 유지 */
+}
+
+.tab-btn:hover:not(.active) {
+    background-color: rgba(var(--primary-color), 0.1);
+}
+
+.inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
+    padding: 10px;
+    min-height: 100px;
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.05);
+    align-content: start;
+}
+
+.inventory-item {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 8px;
+    text-align: center;
+    font-size: 0.8em;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color); /* ★ 적용: 변경된 텍스트 색상 */
+}
+
+/* 인벤토리 아이템 내부 이미지 스타일 */
+.inventory-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    margin-bottom: 5px;
+}
+
+.inventory-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.item-count {
+    display: block;
+    font-size: 0.7em;
+    color: #666; /* 아이템 카운트 색상 유지 */
+    margin-top: 3px;
+}
+
+/* 아이템 등급별 색상 (유지 또는 대비가 잘 되도록 조정) */
+.item-common { border-color: #a4b0be; color: #667280; }
+.item-uncommon { border-color: #2ed573; color: #2ed573; }
+.item-rare { border-color: #1e90ff; color: #1e90ff; }
+.item-legend { border-color: #ff6348; color: #ff6348; }
+.item-mythic { border-color: #8e44ad; color: #8e44ad; }
+.item-doomdoom { border-color: #f7d794; color: #c4a96f; animation: neon-doomdoom 1.5s infinite alternate; }
+.item-banner { border-color: #ff00ff; color: #e600e6; animation: pulse-banner 1s infinite alternate; }
+
+/* @keyframes neon-doomdoom 및 @keyframes pulse-banner은 그대로 유지 */
+
+/* 하단 내비게이션 */
+.bottom-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 15px 0;
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    bottom: 0;
+    z-index: 500;
+}
+
+.nav-btn {
+    width: 30%;
+    padding: 15px 0;
+    font-size: 1.2em;
+    color: var(--text-color); /* ★ 적용: 변경된 텍스트 색상 */
+}
+
+/* 추가 시청자 모달 */
+.passive-viewers-modal-content {
+    max-width: 1200px;
+    width: 95%;
+    color: var(--text-color); /* ★ 적용: 변경된 텍스트 색상 */
+}
+
+.passive-viewers-modal-content h2 {
+    margin-bottom: 25px;
+}
+
+.passive-viewer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 20px;
+}
+
+.passive-viewer-grid .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--secondary-color);
+    color: var(--text-color); /* ★ 적용: 변경된 텍스트 색상 */
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.passive-viewer-grid .viewer-stats {
+    width: 100%;
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+.passive-viewer-grid .viewer-stats p {
+    font-size: 0.9em;
+    margin: 4px 0;
+    color: var(--text-color); /* ★ 명시적 적용: stats-area 내부 p 태그 */
+}
+
+/* 모달 닫기 버튼 */
+.close-modal-btn {
+    background-color: #999;
+    margin-top: 20px;
+}
+
+.close-modal-btn:hover {
+    background-color: #666;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 992px) {
+    .main-layout {
+        grid-template-columns: 1fr;
+    }
+    .phone-frame {
+        height: auto;
+        max-height: 600px;
+    }
+    .phone-screen {
+        height: auto;
+        max-height: 550px;
+    }
+    .left-panel {
+        order: 2;
+    }
+    .right-panel {
+        order: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    #gameContainer {
+        padding: 10px;
+    }
+    .modal-content {
+        padding: 20px;
+        width: 95%;
+    }
+    .modal-content h1 {
+        font-size: 2em;
+    }
+    .btn {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+    .passive-viewer-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+    }
+    .nav-btn {
+        font-size: 1em;
+        padding: 12px 0;
+    }
+    .inventory-grid {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    }
+    .inventory-item {
+        padding: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-layout {
+        gap: 15px;
+    }
+    .game-area {
+        padding: 15px;
+    }
+    .card {
+        padding: 15px;
+    }
+    h2, h3 {
+        font-size: 1.5em;
+    }
+    .passive-viewer-grid {
+        grid-template-columns: 1fr;
+    }
+    .nav-btn {
+        width: 32%;
+    }
+}
